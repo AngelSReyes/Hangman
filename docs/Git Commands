@@ -1,0 +1,7 @@
+git branch <>
+git checkout <>
+git add -A
+git commit {using VS Code}
+git push --set-upstream origin <>
+git merge {using GitHub}
+git pull
