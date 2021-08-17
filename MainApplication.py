@@ -39,7 +39,8 @@ def checkIfLetterIsInKeyword(letter, randomWord):
 
 
 def letterpositionlister(letter,randomWord,letterlist):
-    letterlist.append(letter)
+    if letter in randomWord:
+        letterlist.append(letter)
     letterpositionlist=list(map(randomWord.find,letterlist))
     return letterpositionlist 
 
@@ -47,9 +48,9 @@ def letterprintout(letter,randomWord,letterpositionlist,letterlist):
     forstop=len(letterlist)
     wordreadout=list("#" *len(randomWord))
     if letter in randomWord:
-        for x in range(0,(forstop)):
+        for x in range(0,(forstop-1)):
           wordreadout[letterpositionlist[x]]=letterlist[x]
-        wordreadout="".join(wordreadout)
+    wordreadout="".join(wordreadout)
     return print(wordreadout)  
         
 
@@ -64,14 +65,17 @@ def main():
     checkIfLetterIsInKeyword(letter, randomWord)
     letterpositionlister(letter,randomWord,letterlist)
     letterprintout(letter,randomWord,letterpositionlist,letterlist)
-    getLetterFromUser()
+    print(letterlist)
+    letter=getLetterFromUser()
     checkIfLetterIsInKeyword(letter, randomWord)
     letterpositionlister(letter,randomWord,letterlist)
     letterprintout(letter,randomWord,letterpositionlist,letterlist)
-    getLetterFromUser()
+    print(letterlist)
+    letter=getLetterFromUser()
     checkIfLetterIsInKeyword(letter, randomWord)
     letterpositionlister(letter,randomWord,letterlist)
     letterprintout(letter,randomWord,letterpositionlist,letterlist)
+    print(letterlist)
 
 
     
