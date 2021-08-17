@@ -1,7 +1,7 @@
 """
 Author          : Ben Fisher and Angel Reyes
 Date Created    : 16/08/2021
-Date Modified   : 
+Date Modified   : 17/08/2021
 Version         : 0.1
 Description     : Hangman game
 History         : 0.1   : File creation
