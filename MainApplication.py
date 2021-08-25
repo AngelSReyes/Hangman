@@ -40,16 +40,23 @@ def checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedLetterList):
         # if yes then add this to the user's inputted letter list to save and return
         inputtedLetterList.append(inputtedLetter) 
     else:
+        if inputtedLetter.isalpha() == False:
+            print("This is not a letter, please enter a letter!")
+        else:
+            if len(inputtedLetter)>=2:
+                print("Please only enter 1 letter!")
+
         print("oh no!")
         
     return inputtedLetterList
 
 
-def chancesLeftToPlay(usedChances, maxChance):
+def chancesLeftToPlay(usedChances, maxChance,randomWord):
     """
     Increments the usedChances and if this equals the max change return true
     """
     usedChances = usedChances + 1
+    maxChance = (len(randomWord)+6)
     if usedChances >= maxChance:
         return True, usedChances
     else:
@@ -86,17 +93,17 @@ def letterPrintOut(randomWord, inputtedLetterList):
 def main():
     print("\n\
             -------------------------------------\n\
-            ---- Welcome to Our Hanman Game! ----\n\
+            ---- Welcome to Our Hangman Game! ----\n\
             -------------------------------------\n")
     inputtedLetterList=[]
     usedChances = 0
     endgame = False
     randomWord = randomKeywordList()
-    
+
     while(endgame == False):
         letterPrintOut(randomWord, inputtedLetterList)
         inputtedLetter = getLetterFromUser()
-        endgame, usedChances = chancesLeftToPlay(usedChances, (len(randomWord)+2))
+        endgame, usedChances = chancesLeftToPlay(usedChances, (len(randomWord)+2), randomWord)
         inputtedLetterList = checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedLetterList)
         print("____________________________________________")
 
