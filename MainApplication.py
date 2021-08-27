@@ -30,33 +30,44 @@ def getLetterFromUser():
     return inputtedLetter
 
 
-def checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedLetterList):
+def checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList, inputtedWrongLetterList):
     """
     Checks that this letter is in the random key word. 
     If yes, add this to the inputtedLetterList which is the list of the inputted letters by the user
     """
+    #if the letter is right, it goes in "inputtedRightLetterList", if it isnt, it goes in "inputtedWrongLetterList"
+    # "inputtedWrongLetterList" is then used to print the hangman
     # Check if the user's inputted letter is in the random keyword
     if inputtedLetter in randomWord:
+        if inputtedLetter in inputtedRightLetterList:
+            print("letter has already been inputted and is right, please enter another letter!")
         # if yes then add this to the user's inputted letter list to save and return
-        inputtedLetterList.append(inputtedLetter) 
+        else: 
+            inputtedRightLetterList.append(inputtedLetter) 
     else:
+        if inputtedLetter in inputtedWrongLetterList:
+            print("letter has already been inputted and is wrong, please enter another letter!")
         if inputtedLetter.isalpha() == False:
             print("This is not a letter, please enter a letter!")
         else:
             if len(inputtedLetter)>=2:
                 print("Please only enter 1 letter!")
 
+        inputtedWrongLetterList.append(inputtedLetter)
         print("oh no!")
         
-    return inputtedLetterList
+    return inputtedRightLetterList
 
 
-def chancesLeftToPlay(usedChances, maxChance,randomWord):
+
+def chancesLeftToPlay(usedChances, maxChance,randomWord,inputtedLetter):
     """
     Increments the usedChances and if this equals the max change return true
-    """
-    usedChances = usedChances + 1
-    maxChance = (len(randomWord)+6)
+    """  
+    if inputtedLetter not in randomWord:
+           usedChances = usedChances + 1
+
+    maxChance = 6
     if usedChances >= maxChance:
         return True, usedChances
     else:
@@ -65,7 +76,7 @@ def chancesLeftToPlay(usedChances, maxChance,randomWord):
     
 
 
-def letterPrintOut(randomWord, inputtedLetterList):
+def letterPrintOut(randomWord, inputtedRightLetterList):
     """
     Displays the _ _ _ _ for the keyword.
     """
@@ -75,12 +86,36 @@ def letterPrintOut(randomWord, inputtedLetterList):
     for x in randomWord:
         # if the letter is in the key then print this out
         # the end =" " is to ensure that the print doesn't go on a new line 
-        if x in inputtedLetterList:
+        if x in inputtedRightLetterList:
             print(x, end =" ")
         # if not then print a _
         else:
             print("_", end =" ")
 
+def hangmanPrintOut(inputtedWrongLetterList):
+    wrongCount=len(inputtedWrongLetterList)
+    print("\n _________\n|         |\n")
+    if wrongCount >=1:
+        print("|         O\n")
+    else:
+        print("|\n")
+    if wrongCount >=2:
+        print("|       / |",end ="")
+    else:
+        print("|")
+    if wrongCount >= 3:
+        print(" \ \n")
+    else:
+        print("\n")
+    if wrongCount >= 4:
+        print("|        / ",end = "")
+    else:
+        print("|")
+    if wrongCount >= 5:
+        print("\ \n |\ \n |_\ ")
+    else:
+        print("\n|\ \n|_\ ")
+    
 
 """ def letterPositionLister(inputtedLetter,randomWord,inputtedLetterList):
     if inputtedLetter in randomWord:
@@ -95,30 +130,34 @@ def main():
             -------------------------------------\n\
             ---- Welcome to Our Hangman Game! ----\n\
             -------------------------------------\n")
-    inputtedLetterList=[]
+    inputtedRightLetterList=[]
+    inputtedWrongLetterList=[]
     usedChances = 0
     endgame = False
     randomWord = randomKeywordList()
 
     while(endgame == False):
-        letterPrintOut(randomWord, inputtedLetterList)
+        letterPrintOut(randomWord, inputtedRightLetterList)
+        hangmanPrintOut(inputtedWrongLetterList)
         inputtedLetter = getLetterFromUser()
-        endgame, usedChances = chancesLeftToPlay(usedChances, (len(randomWord)+2), randomWord)
-        inputtedLetterList = checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedLetterList)
+        endgame, usedChances = chancesLeftToPlay(usedChances, 6, randomWord,inputtedLetter)
+        inputtedRightLetterList = checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList, inputtedWrongLetterList)
         print("____________________________________________")
 
+    while(endgame == True):
+        print()
     """
     Needs:
         1. What happens that the user failed the game 
         2. What happens that the user passed the game 
-        3. What happens when user inputs a number
-        4. What happens when user inputs a special character
-        5. What happens when user inputs multiple letters
+        3. What happens when user inputs a number x
+        4. What happens when user inputs a special character x
+        5. What happens when user inputs multiple letters x
         6. Make the UI nicer, e.g. have a hangman character, print messages format
         7. What is the user wants to add their own list of keywords
         8. Let the user know what letters theyve already inputted and was wrong
-        9. What happens then the user inputs the same correct letter
-        10. What happens then the user inputs the same incorrect letter
+        9. What happens then the user inputs the same correct letter x
+        10. What happens then the user inputs the same incorrect letter x
     """
     
     
