@@ -1,14 +1,15 @@
 """
 Author          : Ben Fisher and Angel Reyes
 Date Created    : 16/08/2021
-Date Modified   : 17/08/2021
-Version         : 0.1
+Date Modified   : 27/08/2021
+Version         : 0.2
 Description     : Hangman game
 History         : 0.1   : File creation
+                : 0.2   : Added hangman character for error letters
 """
 
 #Import required libraries
-import random
+import random       # Randomize the list of key words to guess from
 
 def randomKeywordList():
     """
@@ -93,6 +94,9 @@ def letterPrintOut(randomWord, inputtedRightLetterList):
             print("_", end =" ")
 
 def hangmanPrintOut(inputtedWrongLetterList):
+    """
+    Displays the hangman character. 
+    """
     wrongCount=len(inputtedWrongLetterList)
     print("\n _________\n|         |\n")
     if wrongCount >=1:
@@ -154,10 +158,11 @@ def main():
         4. What happens when user inputs a special character x
         5. What happens when user inputs multiple letters x
         6. Make the UI nicer, e.g. have a hangman character, print messages format
-        7. What is the user wants to add their own list of keywords
+        7. What if the user wants to add their own list of keywords
         8. Let the user know what letters theyve already inputted and was wrong
         9. What happens then the user inputs the same correct letter x
         10. What happens then the user inputs the same incorrect letter x
+        11. Error message for entering no characters
     """
     
     
