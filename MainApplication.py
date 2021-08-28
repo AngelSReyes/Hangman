@@ -39,24 +39,27 @@ def checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList
     #if the letter is right, it goes in "inputtedRightLetterList", if it isnt, it goes in "inputtedWrongLetterList"
     # "inputtedWrongLetterList" is then used to print the hangman
     # Check if the user's inputted letter is in the random keyword
-    if inputtedLetter in randomWord:
-        if inputtedLetter in inputtedRightLetterList:
-            print("letter has already been inputted and is right, please enter another letter!")
+    if inputtedLetter:
+        if inputtedLetter in randomWord:
+            if inputtedLetter in inputtedRightLetterList:
+                print("letter has already been inputted and is right, please enter another letter!")
         # if yes then add this to the user's inputted letter list to save and return
-        else: 
-            inputtedRightLetterList.append(inputtedLetter) 
-    else:
-        if inputtedLetter in inputtedWrongLetterList:
-            print("letter has already been inputted and is wrong, please enter another letter!")
-        if inputtedLetter.isalpha() == False:
-            print("This is not a letter, please enter a letter!")
+            else: 
+                inputtedRightLetterList.append(inputtedLetter) 
         else:
-            if len(inputtedLetter)>=2:
-                print("Please only enter 1 letter!")
-
-        inputtedWrongLetterList.append(inputtedLetter)
-        print("oh no!")
+            if inputtedLetter in inputtedWrongLetterList:
+                print("letter has already been inputted and is wrong, please enter another letter!")
+            if inputtedLetter.isalpha() == False:
+                print("This is not a letter, please enter a letter!")
+            else:
+                if len(inputtedLetter)>=2:
+                    print("Please only enter 1 letter!")
+    
+            inputtedWrongLetterList.append(inputtedLetter)
+            print("oh no!")
         
+    else:
+        print("empty input, please enter a letter!")
     return inputtedRightLetterList
 
 
@@ -121,26 +124,36 @@ def hangmanPrintOut(inputtedWrongLetterList):
         print("\n|\ \n|_\ ")
 
    
-def wannaPlayAgain(endgame):
+def wannaPlayAgain():
+    global endgame
     playAgain=input("\n\n would you like to play again? y/n")
     if playAgain == ("y"):
-        endgame==False
+        endgame = False
         return True, endgame
     if playAgain == ("n"):
+        print("bye for now!")
         return False, endgame
     else: 
         print("please enter y/n")
         playAgain=input("\n\n would you like to play again? y/n")
 
 
-"""
-def winner(randomWord, inputtedRightLetterList,endgame):
-    if len(randomWord)==len(inputtedRightLetterList):
-        endgame == True
+
+def winner(randomWord, inputtedRightLetterList):
+    global endgame
+    winnerLetterList=list(dict.fromkeys(inputtedRightLetterList))
+    winnerLetterList.sort()
+    randomWordList=list(randomWord)
+    randomWordList=list(dict.fromkeys(randomWordList))
+    randomWordList.sort()
+    if randomWordList == winnerLetterList:
+        endgame = True
+        print("you Win!")
         return True, endgame
-    else:
-        return False, endgame
-"""
+    else: 
+        return False
+     
+
 """ def letterPositionLister(inputtedLetter,randomWord,inputtedLetterList):
     if inputtedLetter in randomWord:
         inputtedLetterList.append(inputtedLetter)
@@ -154,23 +167,31 @@ def main():
             -------------------------------------\n\
             ---- Welcome to Our Hangman Game! ----\n\
             -------------------------------------\n")
-    inputtedRightLetterList=[]
-    inputtedWrongLetterList=[]
-    usedChances = 0
-    endgame = False
-    randomWord = randomKeywordList()
+            
+    while True:
+        global endgame
+        inputtedRightLetterList=[]
+        inputtedWrongLetterList=[]
+        usedChances = 0
+        endgame = False
+        randomWord = randomKeywordList()
 
-    while(endgame == False):
-        letterPrintOut(randomWord, inputtedRightLetterList)
-        hangmanPrintOut(inputtedWrongLetterList)
-        inputtedLetter = getLetterFromUser()
-        endgame, usedChances = chancesLeftToPlay(usedChances, 6, randomWord,inputtedLetter)
-        inputtedRightLetterList = checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList, inputtedWrongLetterList)
-        print("____________________________________________")
+        while(endgame == False):
+            letterPrintOut(randomWord, inputtedRightLetterList)
+            hangmanPrintOut(inputtedWrongLetterList)
+            inputtedLetter = getLetterFromUser()
+            endgame, usedChances = chancesLeftToPlay(usedChances, 6, randomWord,inputtedLetter)
+            inputtedRightLetterList = checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList, inputtedWrongLetterList)
+            winner(randomWord,inputtedRightLetterList)
+            print("____________________________________________")
 
-    while(endgame == True):
-        print("Game Over!!")
-        wannaPlayAgain(endgame)
+        while(endgame == True):
+            wannaPlayAgain()
+            if endgame==True:
+                break
+        if endgame==True:
+            break
+        
 
     """
     Needs:
@@ -184,7 +205,7 @@ def main():
         8. Let the user know what letters theyve already inputted and was wrong
         9. What happens then the user inputs the same correct letter x
         10. What happens then the user inputs the same incorrect letter x
-        11. Error message for entering no characters
+        11. Error message for entering no characters(this now works by way of an "if inputtedLetter: else:" statement in checkifletter)
     """
     
     
