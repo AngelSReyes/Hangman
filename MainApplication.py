@@ -115,8 +115,28 @@ def hangmanPrintOut(inputtedWrongLetterList):
         print("\ \n |\ \n |_\ ")
     else:
         print("\n|\ \n|_\ ")
-    
 
+   
+def wannaPlayAgain(endgame):
+    playAgain=input("\n\n would you like to play again? y/n")
+    if playAgain == ("y"):
+        endgame==False
+        return True, endgame
+    if playAgain == ("n"):
+        return False, endgame
+    else: 
+        print("please enter y/n")
+        playAgain=input("\n\n would you like to play again? y/n")
+
+
+"""
+def winner(randomWord, inputtedRightLetterList,endgame):
+    if len(randomWord)==len(inputtedRightLetterList):
+        endgame == True
+        return True, endgame
+    else:
+        return False, endgame
+"""
 """ def letterPositionLister(inputtedLetter,randomWord,inputtedLetterList):
     if inputtedLetter in randomWord:
         inputtedLetterList.append(inputtedLetter)
@@ -145,11 +165,13 @@ def main():
         print("____________________________________________")
 
     while(endgame == True):
-        print()
+        print("Game Over!!")
+        wannaPlayAgain(endgame)
+
     """
     Needs:
-        1. What happens that the user failed the game 
-        2. What happens that the user passed the game 
+        1. What happens that the user failed the game (almost, tried to make a return loop but it wouldnt reset endgame)
+        2. What happens that the user passed the game (struggling, made a winner function but still thinking about how game knows you've won)
         3. What happens when user inputs a number x
         4. What happens when user inputs a special character x
         5. What happens when user inputs multiple letters x
