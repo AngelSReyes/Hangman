@@ -67,9 +67,7 @@ def checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList
     # "inputtedWrongLetterList" is then used to print the hangman
     # Check if the user's inputted letter is in the random keyword
     if inputtedLetter:
-        if inputtedLetter == "cheat":
-            inputtedRightLetterList=list(randomWord)
-        if inputtedLetter == "mabuhay":
+        if inputtedLetter == "help":
             print(randomWord)
         else: 
             if inputtedLetter in randomWord:
