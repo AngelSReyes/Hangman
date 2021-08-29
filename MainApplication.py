@@ -6,6 +6,7 @@ Version         : 0.2
 Description     : Hangman game
 History         : 0.1   : File creation
                 : 0.2   : Added hangman character for error letters
+                : 0.3   : Added player word entry
 """
 
 #Import required libraries
@@ -18,30 +19,35 @@ def randomKeywordList():
     Creates a list which has random keywords used to play hangman.
     Shuffles the list and returns the first value in the list.
     """
-    x = False
-    while x==False:
-        category= input("pick a category: fruits, animals or countries\n")
-        if category=="fruits":
-            keywordList = ["apple", "strawberry", "pineapple", "orange", "banana", "mango", 
-                            "passionfruit", "watermelon", "dragonfruit"]
-            x=True
-        elif category == "animals":
-            keywordList =["dog", "cat", "pig", "dinosaur", "peacock", "penguin", "moose", 
-                            "fish", "porcupine", "giraffe", "elephant", "puffin", "alligator", "rhinoceros"]
-            x=True
-        elif category == "countries":
-            keywordList =["france","spain","philippines", "vietnam", "cambodia", "somalia", "canada", "brazil",
-                            "new zealand", "ireland", "south africa"]
-            x=True
-        elif category =="cheat":
-            keywordList =["new zealand"]
-            x=True
-        else: 
-            print("please enter 'fruits', 'animals', or 'countries'")
+    x = True
+    wordorcategory=input("type a word, or leave blank to choose a category\n")
+    if wordorcategory:
+        return wordorcategory
+    else:
+        
+        x = False
+        while x==False:
+            category= input("pick a category: fruits, animals or countries\n")
+            if category=="fruits":
+                keywordList = ["apple", "strawberry", "pineapple", "orange", "banana", "mango", 
+                                "passionfruit", "watermelon", "dragonfruit"]
+                x=True
+            elif category == "animals":
+                keywordList =["dog", "cat", "pig", "dinosaur", "peacock", "penguin", "moose", 
+                                "fish", "porcupine", "giraffe", "elephant", "puffin", "alligator", "rhinoceros"]
+                x=True
+            elif category == "countries":
+                keywordList =["france","spain","philippines", "vietnam", "cambodia", "somalia", "canada", "brazil",
+                                "new zealand", "ireland", "south africa"]
+                x=True
+            elif category =="cheat":
+                keywordList =["new zealand"]
+                x=True
+            else: 
+                print("please enter 'fruits', 'animals', or 'countries'")
 
-    random.shuffle(keywordList)
-    return keywordList[0]
-
+        random.shuffle(keywordList)
+        return keywordList[0]
 
 def getLetterFromUser():
     """
@@ -118,7 +124,7 @@ def letterPrintOut(randomWord, inputtedRightLetterList):
         # if the letter is in the key then print this out
         # the end =" " is to ensure that the print doesn't go on a new line 
         if x in inputtedRightLetterList:
-            print(x, end =" ")
+            print(x, end = " ")
         # if not then print a _
         else:
             print("_", end =" ")
@@ -173,10 +179,12 @@ def wannaPlayAgain(endgame):
 
 
 def winner(randomWord, inputtedRightLetterList, endgame):
+    
     winnerLetterList=list(dict.fromkeys(inputtedRightLetterList))
     winnerLetterList.sort()
     randomWordList=list(randomWord)
     randomWordList=list(dict.fromkeys(randomWordList))
+    randomWordList.append(" ")
     randomWordList.sort()
     if randomWordList == winnerLetterList:
         endgame = True
@@ -185,6 +193,7 @@ def winner(randomWord, inputtedRightLetterList, endgame):
     else: 
         endgame = False
         return endgame
+        
      
 
 def main():
@@ -194,6 +203,7 @@ def main():
             -------------------------------------\n")
             
     while True:
+        global endgame
         inputtedRightLetterList=[" "]
         inputtedWrongLetterList=[]
         usedChances = 0
@@ -208,6 +218,7 @@ def main():
             inputtedRightLetterList = checkIfLetterIsInKeyword(inputtedLetter, randomWord, inputtedRightLetterList, inputtedWrongLetterList)
             wrongletterprinter(inputtedWrongLetterList)
             endgame = winner(randomWord,inputtedRightLetterList, endgame)
+            
             print("\n____________________________________________")
 
         while(endgame == True):
